@@ -4,6 +4,7 @@ import com.newsportal.newsportal.model.Group;
 import com.newsportal.newsportal.model.SecurityQuestion;
 import com.newsportal.newsportal.model.User;
 import com.newsportal.newsportal.model.UserAccount;
+import com.newsportal.newsportal.repository.SecurityQuestionRepository;
 import com.newsportal.newsportal.repository.UserAccountRepository;
 import com.newsportal.newsportal.repository.UserRepository;
 import com.newsportal.newsportal.source.Grp;
@@ -22,10 +23,13 @@ public class RegisterController {
     private UserRepository userRepository;
     @Autowired
     private UserAccountRepository userAccountRepository;
+    @Autowired
+    private SecurityQuestionRepository securityQuestionRepository;
 
     @GetMapping("kayit-ol")
     public ModelAndView registerPage(ModelAndView modelAndView, HttpSession session){
         if(session.getAttribute("id") == null){
+            modelAndView.addObject("securityQuestions", securityQuestionRepository.findAll());
             modelAndView.setViewName("register.jsp");
         }else{
             modelAndView.setViewName("redirect:/");
@@ -42,7 +46,7 @@ public class RegisterController {
         String username = request.getParameter("username");
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");
-        String securityQuestionId = request.getParameter("security-question-id");
+        String securityQuestionId = request.getParameter("security-question");
         String securityQuestionAnswer = request.getParameter("security-question-answer");
         if (!password1.equals(password2)){
             modelAndView.setViewName("redirect:/kayit-ol");
@@ -50,7 +54,7 @@ public class RegisterController {
         }
 
 
-        User user = new User().setName(name).setLastname(lastname).setAddress(address).setPhoneNumber(phoneNumber).setGroup(new Group().setId(Grp.USER));
+        User user = new User().setName(name).setLastname(lastname).setAddress(address).setPhoneNumber(phoneNumber).setBeInUse(true).setGroup(new Group().setId(Grp.USER));
 
         UserAccount userAccount  = new UserAccount()
                 .setUsername(username)

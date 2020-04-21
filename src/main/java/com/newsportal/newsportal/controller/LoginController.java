@@ -1,5 +1,6 @@
 package com.newsportal.newsportal.controller;
 
+import com.newsportal.newsportal.repository.SecurityQuestionRepository;
 import com.newsportal.newsportal.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

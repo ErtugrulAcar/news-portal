@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/register.css">
+    <link rel="stylesheet" href="../static/semantic/semantic.css">
 </head>
 <body class="app">
 <div id="loader">
@@ -64,11 +66,16 @@
 
             <div class="form-group">
                 <label class="text-normal text-dark">Bir güvenlik sorusu seçiniz</label>
-                <input type="text" name="security-question-id" class="form-control" style="border-left: 3px solid #FA906E;" required>
+                <select name="security-question" id="security-question" class="ui selection dropdown fluid">
+                    <c:forEach var="question" items="${securityQuestions}">
+                        <option value="${question.id}">${question.question}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="form-group">
                 <label class="text-normal text-dark">Güvenlik sorusu cevabınız</label>
                 <input type="text" name="security-question-answer" class="form-control" style="border-left: 3px solid #FA906E;" required>
+
             </div>
 
 
@@ -90,8 +97,9 @@
 <script type="text/javascript" src="../static/js/vendor.js"></script>
 <script type="text/javascript" src="../static/js/bundle.js"></script>
 <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/semantic/semantic.min.js"></script>
 <script>
-
+    $("#security-question").dropdown();
 </script>
 
 </body>
