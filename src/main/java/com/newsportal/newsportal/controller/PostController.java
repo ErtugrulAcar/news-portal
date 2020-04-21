@@ -10,12 +10,14 @@ import com.newsportal.newsportal.source.Perm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("haber")
@@ -51,7 +53,6 @@ public class PostController {
     @PostMapping("create")
     public ModelAndView createPost(ModelAndView modelAndView, HttpSession session, HttpServletRequest request){
         Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
-
         if(isLoggedIn != null && isLoggedIn) {
             int userId = (int) session.getAttribute("id");
             int groupId = (int) session.getAttribute("groupId");
@@ -76,6 +77,23 @@ public class PostController {
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
+
+    @GetMapping("{postId}")
+    public ModelAndView postPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
+        Optional<Post> post = postRepository.findById(postId);
+        if(post.isPresent()){
+            modelAndView.addObject("post", post.get());
+            modelAndView.setViewName("post.jsp");
+        }else{
+            modelAndView.setViewName("redirect:/");
+        }
+        return modelAndView;
+    }
+
+
+
+
+
 
 
     @GetMapping("guncelle")

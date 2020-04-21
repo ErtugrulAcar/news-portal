@@ -118,4 +118,8 @@ public class Post {
     public String getLocalDateTimeAsReadable(LocalDateTime localDateTime){
         return localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+
+    public String getAuthorAndLocalDateTimeAsReadable(LocalDateTime localDateTime){
+        return this.author.getName() + " " + this.author.getLastname()  + " | " + localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
 }
