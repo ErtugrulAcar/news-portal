@@ -101,7 +101,7 @@
                     <textarea name="address">${user.address}</textarea>
                 </div>
                 <br>
-                <button class="ui button" type="submit" id="profile-btn">Submit</button>
+                <button class="ui button" type="submit" id="profile-btn">Kaydet</button>
             </form>
 
         </main>

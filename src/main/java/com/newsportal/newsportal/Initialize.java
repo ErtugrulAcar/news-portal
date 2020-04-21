@@ -17,14 +17,16 @@ public class Initialize implements CommandLineRunner {
     private GroupRepository groupRepository;
     private PostGroupRepository postGroupRepository;
     private PostRepository postRepository;
+    private PermissionRepository permissionRepository;
 
-    public Initialize(UserRepository userRepository, UserAccountRepository userAccountRepository, SecurityQuestionRepository securityQuestionRepository, GroupRepository groupRepository, PostGroupRepository postGroupRepository, PostRepository postRepository) {
+    public Initialize(UserRepository userRepository, UserAccountRepository userAccountRepository, SecurityQuestionRepository securityQuestionRepository, GroupRepository groupRepository, PostGroupRepository postGroupRepository, PostRepository postRepository, PermissionRepository permissionRepository) {
         this.userRepository = userRepository;
         this.userAccountRepository = userAccountRepository;
         this.securityQuestionRepository = securityQuestionRepository;
         this.groupRepository = groupRepository;
         this.postGroupRepository = postGroupRepository;
         this.postRepository = postRepository;
+        this.permissionRepository = permissionRepository;
     }
 
     @Override
@@ -39,6 +41,8 @@ public class Initialize implements CommandLineRunner {
             initUser();
         if(postRepository.count() == 0)
             initPost();
+        if(permissionRepository.count() == 0)
+            initPermissions();
 
     }
 
@@ -129,4 +133,18 @@ public class Initialize implements CommandLineRunner {
                 )
         );
     }
+
+    public void initPermissions(){
+        permissionRepository.saveAll(
+                Arrays.asList(
+                    new Permission().setId(1).setName("Haber Oluşturma Yetkisi").setDescription("Mevcut haber türlerinden birine haber oluşturma yetkisi")
+                    .setGroups(
+                            Arrays.asList(
+                                    new Group().setId(Grp.EDITOR)
+                            )
+                    )
+                )
+        );
+    }
+
 }

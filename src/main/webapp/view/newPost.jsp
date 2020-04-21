@@ -57,7 +57,7 @@
             }
         }</style>
     <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href="../static/css/newPost.css">
     <link rel="stylesheet" href="../static/semantic/semantic.css">
 </head>
 <body class="app" style="background-image: url(../static/img/gazette.jpg)">
@@ -77,41 +77,40 @@
     <div class="container">
         <!-- NAVBAR -->
         <%@include file="static/navbar.jsp"%>
-        <main class="main-content bgc-grey-100">
 
-            <c:forEach var="post" items="${posts}">
-                <div class="row post-row">
-                    <div class="col-md-9">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <h4>
-                                    <a href="/haber/${post.id}">${post.title} </a>
-                                </h4>
-                            </div>
-                            <div class="col-md-2">
-                                <span class="post-time">
-                                   ${post.getLocalDateTimeAsReadable(post.created_at)}
-                                </span>
-                            </div>
-
+        <main class="main-content bgc-grey-100" style="padding-left: 20px;">
+            <form class="ui form" action="/haber/create" method="post">
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" name="title" id="title" placeholder="Başlık" required>
                         </div>
-                        <div class="row">
-                            <c:choose>
-                                <c:when test="${post.content.length() > 460}">
-                                    <p> ${post.content.substring(0, 460)} ...</p>
-                                </c:when>
-                                <c:otherwise>
-                                    <p> ${post.content}</p>
-                                </c:otherwise>
-                            </c:choose>
+                        <div class="field">
+                            <select name="post-group" id="post-group" class="ui selection dropdown fluid">
+                                <c:forEach var="group" items="${groups}">
+                                    <option value="${group.id}">${group.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="field">
+                            <textarea name="content" rows="20" placeholder="İçerik" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <img src="${post.imageUrl}" alt="" class="post-img" style="float: right;">
+                        <img src="../static/img/questionMark.png" alt="Resim Bulunamadı" id="post-img">
+                        <br>
+                        <div class="field">
+                            <input type="text" name="img-url" id="img-url" placeholder="Resim Urlsi" required>
+                        </div>
                     </div>
                 </div>
 
-            </c:forEach>
+                <button class="ui button" type="submit" id="new-post-btn">Oluştur</button>
+            </form>
 
         </main>
 
@@ -123,5 +122,18 @@
 <script type="text/javascript" src="../static/js/bundle.js"></script>
 <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="../static/semantic/semantic.min.js"></script>
+
+
+<script>
+    $("#post-group").dropdown();
+    document.getElementById("img-url").addEventListener("input", function () {
+        if(this.value == ""){
+            document.getElementById("post-img").src = "../static/img/questionMark.png";
+        }else{
+            document.getElementById("post-img").src = this.value;
+        }
+    });
+
+</script>
 </body>
 </html>
