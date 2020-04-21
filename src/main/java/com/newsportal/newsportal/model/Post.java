@@ -116,10 +116,13 @@ public class Post {
 
 
     public String getLocalDateTimeAsReadable(LocalDateTime localDateTime){
-        return localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        return localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
     }
 
     public String getAuthorAndLocalDateTimeAsReadable(LocalDateTime localDateTime){
         return this.author.getName() + " " + this.author.getLastname()  + " | " + localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+    public String getAuthorNameAndLastname(){
+        return this.author.getName() + " " + this.author.getLastname();
     }
 }

@@ -1,6 +1,7 @@
 package com.newsportal.newsportal.repository;
 
 import com.newsportal.newsportal.model.Post;
+import com.newsportal.newsportal.model.PostGroup;
 import com.newsportal.newsportal.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +12,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query(value="SELECT * FROM post WHERE verified= true ORDER BY created_at DESC LIMIT 5", nativeQuery=true)
     List<Post> findLast5PostsOrderByDescCreated_At();
+
+    @Query("SELECT post FROM Post AS post WHERE post.postGroup IN :postGroups")
+    List<Post> findPostsByPostGroups(List<PostGroup> postGroups);
 }

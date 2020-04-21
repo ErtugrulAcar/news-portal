@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -81,7 +82,7 @@ public class PostController {
     @GetMapping("{postId}")
     public ModelAndView postPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
         Optional<Post> post = postRepository.findById(postId);
-        if(post.isPresent()){
+        if(post.isPresent() && post.get().isVerified()){
             modelAndView.addObject("post", post.get());
             modelAndView.setViewName("post.jsp");
         }else{
@@ -93,12 +94,18 @@ public class PostController {
 
 
 
-
-
-
-    @GetMapping("guncelle")
+    @GetMapping("listele")
     public ModelAndView modelAndView(ModelAndView modelAndView, HttpSession session){
-        System.out.println("gucenlleme sayfasında");
-        return null;
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+        if(isLoggedIn != null && isLoggedIn) {
+            modelAndView.addObject("newPostActive", "active");
+            int userId = (int) session.getAttribute("id");
+            List<Post> posts = postRepository.findPostsByPostGroups(userRepository.findPostGroupsByUserId(userId));
+            modelAndView.addObject("posts", posts);
+            modelAndView.setViewName("allPosts.jsp");
+        }else{
+            modelAndView.setViewName("redirect:/");
+        }
+        return modelAndView;
     }
 }

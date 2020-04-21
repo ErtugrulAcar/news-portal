@@ -57,7 +57,7 @@
             }
         }</style>
     <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href="../static/css/allPosts.css">
     <link rel="stylesheet" href="../static/semantic/semantic.css">
 </head>
 <body class="app" style="background-image: url(../static/img/gazette.jpg)">
@@ -77,42 +77,43 @@
     <div class="container">
         <!-- NAVBAR -->
         <%@include file="static/navbar.jsp"%>
-        <main class="main-content bgc-grey-100">
 
-            <c:forEach var="post" items="${posts}">
-                <div class="row post-row">
-                    <div class="col-md-9">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h4>
-                                    <a href="/haber/${post.id}">${post.title} </a>
-                                </h4>
-                            </div>
-                            <div class="col-md-4">
-                                <span class="post-time">
-                                   ${post.getLocalDateTimeAsReadable(post.created_at)}
-                                </span>
-                            </div>
-
-                        </div>
-                        <div class="row">
+        <main class="main-content bgc-grey-100" style="padding-left: 20px;">
+            <table class="ui celled striped table">
+                <thead class="full-width">
+                    <tr>
+                        <th>Başlık</th>
+                        <th>Tür</th>
+                        <th>Yazar</th>
+                        <th>Tarih</th>
+                        <th>Onaylandı</th>
+                        <th>Güncelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="post" items="${posts}">
+                        <tr>
+                            <td>${post.title}</td>
+                            <td>${post.postGroup.name}</td>
+                            <td>${post.getAuthorNameAndLastname()}</td>
+                            <td>${post.getLocalDateTimeAsReadable(post.created_at)}</td>
                             <c:choose>
-                                <c:when test="${post.content.length() > 460}">
-                                    <p> ${post.content.substring(0, 460)} ...</p>
+                                <c:when test="${post.verified}">
+                                    <td class="center aligned">
+                                        <i class="large green checkmark icon"></i>
+                                    </td>
                                 </c:when>
                                 <c:otherwise>
-                                    <p> ${post.content}</p>
+                                    <td></td>
                                 </c:otherwise>
                             </c:choose>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="${post.imageUrl}" alt="" class="post-img" style="float: right;">
-                    </div>
-                </div>
-
-            </c:forEach>
-
+                            <td style="text-align: center;">
+                                <a href="/haber/onizle/${post.id}"><i class="far fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </main>
 
     </div>
@@ -123,5 +124,11 @@
 <script type="text/javascript" src="../static/js/bundle.js"></script>
 <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="../static/semantic/semantic.min.js"></script>
+
+
+<script>
+
+
+</script>
 </body>
 </html>

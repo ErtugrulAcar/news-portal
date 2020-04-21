@@ -45,7 +45,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="/haber/yeni">Haber Ekle</a>
-                                    <a class="dropdown-item" href="#">Haber Güncelle / Sil</a>
+                                    <a class="dropdown-item" href="/haber/listele">Haber Güncelle / Sil</a>
                                 </div>
                             </li>
                         </c:when>

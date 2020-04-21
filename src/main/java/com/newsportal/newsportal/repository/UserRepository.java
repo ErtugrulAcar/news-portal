@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT user.postGroup FROM User AS user WHERE user.id= :userId")
     List<PostGroup> findPostGroupsByUserId(int userId);
+
+
 }
