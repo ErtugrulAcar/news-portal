@@ -88,8 +88,8 @@
         </form>
         <br>
         <hr>
-        <a class="links" href="" style="float: left;">Zaten bir hesabım var</a>
-        <a class="links" href="" style="float: right;">Anasayfaya Dön</a>
+        <a class="links" href="/giris" style="float: left;">Zaten bir hesabım var</a>
+        <a class="links" href="/" style="float: right;">Anasayfaya Dön</a>
         <br>
     </div>
 

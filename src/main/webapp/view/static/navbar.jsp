@@ -15,8 +15,8 @@
     </button>
     <div class="collapse navbar-collapse nav-right" id="navbarNavDropdown" style="border-radius: 8px; background-color: #FCB694; margin-right: ">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Anasayfa ${homeActive}</a>
+            <li class="nav-item ${homeActive}">
+                <a class="nav-link" href="#">Anasayfa</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Ayrıntılı Arama</a>
@@ -41,8 +41,8 @@
                             </li>
                         </c:when>
                     </c:choose>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Profil</a>
+                    <li class="nav-item ${profileActive}">
+                        <a class="nav-link" href="/profil">Profil</a>
                     </li>
                 </c:when>
                 <c:otherwise>

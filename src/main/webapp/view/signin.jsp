@@ -54,7 +54,7 @@
         <br>
         <hr>
         <a class="links" href="/kayit-ol" style="float: left;">Hesabınız yok mu? Hemen kaydolun</a>
-        <a class="links" href="" style="float: right;">Anasayfaya Dön</a>
+        <a class="links" href="/" style="float: right;">Anasayfaya Dön</a>
         <br>
     </div>
 
