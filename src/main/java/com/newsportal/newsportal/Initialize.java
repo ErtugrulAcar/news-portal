@@ -115,21 +115,22 @@ public class Initialize implements CommandLineRunner {
                         new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.ECONOMY))
                         .setTitle("Hanelere 1000'er lira desteğin başvuru detayları belli oldu")
                         .setImageUrl("https://im.haberturk.com/2020/04/21/ver1587471607/2653393_810x458.jpg")
-                        .setContent("Aile, Çalışma ve Sosyal Hizmetler Bakanlığı, Ekonomik İstikrar Kalkanı Paketi kapsamında hane başına 1000'er lira desteği içeren 3. faz sosyal destek programı için başvuruları e-Devlet üzerinden almaya başladı. Desteğe, Pandemi Sosyal Destek Programı Faz 1 ve Faz 2 kapsamında verilen 1000 liralık nakdi destekten yararlanmamış olanlar başvurabilecek. Kamu işçileri, memurlar, emekliler ile İŞKUR'un Kısa Çalışma Ödeneği ile İşsizlik Ödeneği'nden faydalananların başvuruları değerlendirmeye alınmayacak. e-Devlet üzerinden T.C. kimlik numarasının son hanesi \"0\" olanlar pazartesi, \"2\" olanlar salı, \"4\" olanlar çarşamba, \"6\" olanlar perşembe ve \"8\" olanlar cuma günü destek başvurusunda bulunabilecek. Destek için cumartesi ve pazar günleri T.C. kimlik numarası ile ilgili sınırlama olmaksızın başvurulabilecek"),
-
+                        .setVerified(true)
+                        .setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis viverra nibh cras pulvinar mattis. Aliquet bibendum enim facilisis gravida. Etiam sit amet nisl purus in mollis. Orci eu lobortis elementum nibh tellus molestie. Volutpat est velit egestas dui id. Lacus sed viverra tellus in hac habitasse. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Quis vel eros donec ac odio tempor orci. Faucibus et molestie ac feugiat sed lectus vestibulum mattis. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec.\n" +
+                                "\n" +
+                                "Justo nec ultrices dui sapien eget mi. Et tortor at risus viverra adipiscing at in. Non curabitur gravida arcu ac tortor. Dignissim sodales ut eu sem integer vitae justo eget magna. In fermentum posuere urna nec tincidunt. Consectetur a erat nam at lectus urna duis. Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Sagittis purus sit amet volutpat consequat mauris. Ut aliquam purus sit amet luctus venenatis lectus. Sem et tortor consequat id porta nibh venenatis cras sed. Metus dictum at tempor commodo ullamcorper a lacus. Nam aliquam sem et tortor consequat id porta nibh venenatis. Dictum varius duis at consectetur lorem donec. Pretium nibh ipsum consequat nisl vel pretium.\n" +
+                                "\n" +
+                                "Diam ut venenatis tellus in metus vulputate. Id semper risus in hendrerit gravida rutrum quisque non tellus. Sit amet consectetur adipiscing elit ut aliquam. Pharetra vel turpis nunc eget lorem dolor sed. Mattis nunc sed blandit libero volutpat. Maecenas pharetra convallis posuere morbi leo urna molestie. Varius morbi enim nunc faucibus a. Semper risus in hendrerit gravida rutrum quisque. Nisl tincidunt eget nullam non nisi est sit amet. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. Lobortis mattis aliquam faucibus purus in massa.\n" +
+                                "\n" +
                         new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.ECONOMY))
                         .setTitle("Petrol fiyatları 20 doların altına indi")
                         .setImageUrl("https://im.haberturk.com/2020/04/21/ver1587464320/2653356_810x458.jpg")
-                        .setContent("Brent petrolün varili dünya genelinde yeni tip koronavirüs (Kovid-19) nedeniyle devam eden düşük talep ve arz fazlasındaki artışla uluslararası piyasalarda 20 doların altına geriledi.\n" +
+                        .setVerified(true)
+                        .setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis viverra nibh cras pulvinar mattis. Aliquet bibendum enim facilisis gravida. Etiam sit amet nisl purus in mollis. Orci eu lobortis elementum nibh tellus molestie. Volutpat est velit egestas dui id. Lacus sed viverra tellus in hac habitasse. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Quis vel eros donec ac odio tempor orci. Faucibus et molestie ac feugiat sed lectus vestibulum mattis. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec.\n" +
                                 "\n" +
-                                "Dünü 25,48 dolardan tamamlayan Brent petrolün varili, saat 12.35 itibarıyla 18,02 dolara kadar inerken günlük kayıp yüzde 29,27 oldu. Brent petroldeki bu geri çekilme Şubat 2002'den bu yana en düşük seviye olarak kayıtlara geçti. Aynı dakikalarda Batı Teksas türü (WTI) ham petrolün varili 6,95 dolardan alıcı bulurken günlük düşüş yüzde 41,88 oldu.\n" +
+                                "Justo nec ultrices dui sapien eget mi. Et tortor at risus viverra adipiscing at in. Non curabitur gravida arcu ac tortor. Dignissim sodales ut eu sem integer vitae justo eget magna. In fermentum posuere urna nec tincidunt. Consectetur a erat nam at lectus urna duis. Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Sagittis purus sit amet volutpat consequat mauris. Ut aliquam purus sit amet luctus venenatis lectus. Sem et tortor consequat id porta nibh venenatis cras sed. Metus dictum at tempor commodo ullamcorper a lacus. Nam aliquam sem et tortor consequat id porta nibh venenatis. Dictum varius duis at consectetur lorem donec. Pretium nibh ipsum consequat nisl vel pretium.\n" +
                                 "\n" +
-                                "ABD'de WTI tipi ham petrolün mayıs ayı için vadeli işlem sözleşmelerinin süresi bugün dolarken, kontrat sahiplerinin fiziki petrol teslimatından kaçınmasıyla WTI tipi petrolün varil fiyatı dün yüzde 300'ün üzerinde değer kaybederek eksi 37,63 seviyesine kadar inmişti.\n" +
-                                "\n" +
-                                "Dünya genelinde hızla yayılan Kovid-19 salgını nedeniyle ekonomik büyüme beklentileri ve petrol tüketimi zayıflamaya devam ediyor. Küresel petrol piyasasındaki arz fazlası her geçen gün artıyor.\n" +
-                                "\n" +
-                                "Petrol İhraç Eden Ülkeler Örgütü (OPEC) ve OPEC dışı bazı ham petrol üreticisi ülkeler 1 Mayıs'tan itibaren toplam ham petrol üretimlerini 2 ay boyunca günlük 9,7 milyon varil azaltma kararı almıştı.")
-
+                                "Diam ut venenatis tellus in metus vulputate. Id semper risus in hendrerit gravida rutrum quisque non tellus. Sit amet consectetur adipiscing elit ut aliquam. Pharetra vel turpis nunc eget lorem dolor sed. Mattis nunc sed blandit libero volutpat. Maecenas pharetra convallis posuere morbi leo urna molestie. Varius morbi enim nunc faucibus a. Semper risus in hendrerit gravida rutrum quisque. Nisl tincidunt eget nullam non nisi est sit amet. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. Lobortis mattis aliquam faucibus purus in massa.\n" +
                 )
         );
     }
@@ -142,7 +143,13 @@ public class Initialize implements CommandLineRunner {
                             Arrays.asList(
                                     new Group().setId(Grp.EDITOR)
                             )
-                    )
+                    ),
+                    new Permission().setId(2).setName("Haber Güncelleme yada Silme Yetkisi").setDescription("Sahip olunan kategorideki tüm onaylanan yada onaylanmayan haberleri güncelleme yada silme yetkisi")
+                        .setGroups(
+                                Arrays.asList(
+                                        new Group().setId(Grp.EDITOR)
+                                )
+                        )
                 )
         );
     }

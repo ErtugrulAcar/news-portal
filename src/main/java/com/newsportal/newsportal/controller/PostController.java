@@ -108,4 +108,29 @@ public class PostController {
         }
         return modelAndView;
     }
+
+    @GetMapping("onizle/{postId}")
+    public ModelAndView previewPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+
+        if(isLoggedIn != null && isLoggedIn) {
+            int userId = (int) session.getAttribute("id");
+            int groupId = (int) session.getAttribute("groupId");
+            if (permissionRepository.hasPermission(Perm.EDIT_OR_DELETE_POST, groupId)) {
+                Optional<Post> post = postRepository.findById(postId);
+                if(post.isPresent()){
+                    modelAndView.addObject("post", post.get());
+                    modelAndView.setViewName("postPreview.jsp");
+                }else{
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }
+            }else{
+                modelAndView.setViewName("redirect:/");
+            }
+        }else{
+            modelAndView.setViewName("redirect:/");
+        }
+        return modelAndView;
+    }
+
 }
