@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Post {
@@ -18,13 +19,20 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    private String imageUrl;
+
     private boolean verified;
+
+    @ManyToOne
+    private User author;
 
     @ManyToOne
     private PostGroup postGroup;
 
     @CreationTimestamp
     private LocalDateTime created_at;
+
+
 
     public Post() {
     }
@@ -41,8 +49,16 @@ public class Post {
         return content;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public boolean isVerified() {
         return verified;
+    }
+
+    public User getAuthor() {
+        return author;
     }
 
     public PostGroup getPostGroup() {
@@ -73,8 +89,18 @@ public class Post {
         return this;
     }
 
+    public Post setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
     public Post setVerified(boolean verified) {
         this.verified = verified;
+        return this;
+    }
+
+    public Post setAuthor(User author) {
+        this.author = author;
         return this;
     }
 
@@ -86,5 +112,10 @@ public class Post {
     public Post setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
         return this;
+    }
+
+
+    public String getLocalDateTimeAsReadable(LocalDateTime localDateTime){
+        return localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 }

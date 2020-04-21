@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Test1 {
 
     public static void main(String[] args) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(localDateTime.getDayOfMonth());
+        String name = "eto";
+        System.out.println(name.length());
     }
 }

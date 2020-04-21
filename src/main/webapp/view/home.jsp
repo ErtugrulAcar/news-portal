@@ -57,9 +57,8 @@
             }
         }</style>
     <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/register.css">
+    <link rel="stylesheet" href="../static/css/home.css">
     <link rel="stylesheet" href="../static/semantic/semantic.css">
-    <link rel="stylesheet" href="/webjars/font-awesome/5.12.0/css/all.css">
 </head>
 <body class="app" style="background-image: url(../static/img/gazette.jpg)">
 <div id="loader">
@@ -79,6 +78,40 @@
         <!-- NAVBAR -->
         <%@include file="static/navbar.jsp"%>
         <main class="main-content bgc-grey-100">
+
+            <c:forEach var="post" items="${posts}">
+                <div class="row post-row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>
+                                    <a href="/haber/${post.id}">${post.title} </a>
+                                </h4>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="post-time">
+                                   ${post.getLocalDateTimeAsReadable(post.created_at)}
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <c:choose>
+                                <c:when test="${post.content.length() > 460}">
+                                    <p> ${post.content.substring(0, 460)} ...</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p> ${post.content}</p>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="${post.imageUrl}" alt="" class="post-img">
+                    </div>
+                </div>
+
+            </c:forEach>
 
         </main>
 

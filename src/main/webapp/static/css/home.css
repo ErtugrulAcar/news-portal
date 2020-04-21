@@ -1,0 +1,19 @@
+.post-img{
+    max-width: 250px;
+    max-height: 150px;
+    border-radius: 5px;
+}
+
+.post-row{
+    border-bottom: 2px solid lightslategray;
+    padding-bottom: 15px;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    margin-top: 15px !important;
+}
+.post-time{
+    color: white;
+    background-color: slategray;
+    border-radius: 5px;
+    padding: 5px;
+}

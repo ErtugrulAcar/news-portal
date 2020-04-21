@@ -16,13 +16,15 @@ public class Initialize implements CommandLineRunner {
     private SecurityQuestionRepository securityQuestionRepository;
     private GroupRepository groupRepository;
     private PostGroupRepository postGroupRepository;
+    private PostRepository postRepository;
 
-    public Initialize(UserRepository userRepository, UserAccountRepository userAccountRepository, SecurityQuestionRepository securityQuestionRepository, GroupRepository groupRepository, PostGroupRepository postGroupRepository) {
+    public Initialize(UserRepository userRepository, UserAccountRepository userAccountRepository, SecurityQuestionRepository securityQuestionRepository, GroupRepository groupRepository, PostGroupRepository postGroupRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.userAccountRepository = userAccountRepository;
         this.securityQuestionRepository = securityQuestionRepository;
         this.groupRepository = groupRepository;
         this.postGroupRepository = postGroupRepository;
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -35,6 +37,8 @@ public class Initialize implements CommandLineRunner {
             initSecurityQuestion();
         if(userRepository.count() == 0)
             initUser();
+        if(postRepository.count() == 0)
+            initPost();
 
     }
 
@@ -100,4 +104,29 @@ public class Initialize implements CommandLineRunner {
         );
     }
 
+    public void initPost(){
+        postRepository.saveAll(
+
+                Arrays.asList(
+                        new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.ECONOMY))
+                        .setTitle("Hanelere 1000'er lira desteğin başvuru detayları belli oldu")
+                        .setImageUrl("https://im.haberturk.com/2020/04/21/ver1587471607/2653393_810x458.jpg")
+                        .setContent("Aile, Çalışma ve Sosyal Hizmetler Bakanlığı, Ekonomik İstikrar Kalkanı Paketi kapsamında hane başına 1000'er lira desteği içeren 3. faz sosyal destek programı için başvuruları e-Devlet üzerinden almaya başladı. Desteğe, Pandemi Sosyal Destek Programı Faz 1 ve Faz 2 kapsamında verilen 1000 liralık nakdi destekten yararlanmamış olanlar başvurabilecek. Kamu işçileri, memurlar, emekliler ile İŞKUR'un Kısa Çalışma Ödeneği ile İşsizlik Ödeneği'nden faydalananların başvuruları değerlendirmeye alınmayacak. e-Devlet üzerinden T.C. kimlik numarasının son hanesi \"0\" olanlar pazartesi, \"2\" olanlar salı, \"4\" olanlar çarşamba, \"6\" olanlar perşembe ve \"8\" olanlar cuma günü destek başvurusunda bulunabilecek. Destek için cumartesi ve pazar günleri T.C. kimlik numarası ile ilgili sınırlama olmaksızın başvurulabilecek"),
+
+                        new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.ECONOMY))
+                        .setTitle("Petrol fiyatları 20 doların altına indi")
+                        .setImageUrl("https://im.haberturk.com/2020/04/21/ver1587464320/2653356_810x458.jpg")
+                        .setContent("Brent petrolün varili dünya genelinde yeni tip koronavirüs (Kovid-19) nedeniyle devam eden düşük talep ve arz fazlasındaki artışla uluslararası piyasalarda 20 doların altına geriledi.\n" +
+                                "\n" +
+                                "Dünü 25,48 dolardan tamamlayan Brent petrolün varili, saat 12.35 itibarıyla 18,02 dolara kadar inerken günlük kayıp yüzde 29,27 oldu. Brent petroldeki bu geri çekilme Şubat 2002'den bu yana en düşük seviye olarak kayıtlara geçti. Aynı dakikalarda Batı Teksas türü (WTI) ham petrolün varili 6,95 dolardan alıcı bulurken günlük düşüş yüzde 41,88 oldu.\n" +
+                                "\n" +
+                                "ABD'de WTI tipi ham petrolün mayıs ayı için vadeli işlem sözleşmelerinin süresi bugün dolarken, kontrat sahiplerinin fiziki petrol teslimatından kaçınmasıyla WTI tipi petrolün varil fiyatı dün yüzde 300'ün üzerinde değer kaybederek eksi 37,63 seviyesine kadar inmişti.\n" +
+                                "\n" +
+                                "Dünya genelinde hızla yayılan Kovid-19 salgını nedeniyle ekonomik büyüme beklentileri ve petrol tüketimi zayıflamaya devam ediyor. Küresel petrol piyasasındaki arz fazlası her geçen gün artıyor.\n" +
+                                "\n" +
+                                "Petrol İhraç Eden Ülkeler Örgütü (OPEC) ve OPEC dışı bazı ham petrol üreticisi ülkeler 1 Mayıs'tan itibaren toplam ham petrol üretimlerini 2 ay boyunca günlük 9,7 milyon varil azaltma kararı almıştı.")
+
+                )
+        );
+    }
 }
