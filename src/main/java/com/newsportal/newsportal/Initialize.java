@@ -160,6 +160,12 @@ public class Initialize implements CommandLineRunner {
                             Arrays.asList(
                                     new Group().setId(Grp.ADMIN)
                             )
+                    ),
+                    new Permission().setId(5).setName("Editör Ekleme, Silme ve Güncelleme Yetkisi").setDescription("Yeni Editör ekleme ve mevcut tüm kategorileri silme, güncelleme yetkisi")
+                    .setGroups(
+                            Arrays.asList(
+                                    new Group().setId(Grp.ADMIN)
+                            )
                     )
                 )
         );

@@ -35,7 +35,7 @@
                                 <a class="nav-link" href="/kategori/listele">Kategori</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Editör</a>
+                                <a class="nav-link" href="/editor/listele">Editör</a>
                             </li>
                         </c:when>
                         <c:when test="${sessionScope.groupId == 2}">

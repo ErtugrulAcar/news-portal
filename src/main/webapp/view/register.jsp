@@ -60,7 +60,7 @@
                 <input type="password" name="password1" class="form-control" style="border-left: 3px solid #FA906E;" required>
             </div>
             <div class="form-group">
-                <label class="text-normal text-dark">Parola</label>
+                <label class="text-normal text-dark">Parola (Tekrar)</label>
                 <input type="password" name="password2" class="form-control" style="border-left: 3px solid #FA906E;" required>
             </div>
 
