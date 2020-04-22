@@ -4,6 +4,7 @@ import com.newsportal.newsportal.model.Post;
 import com.newsportal.newsportal.model.PostGroup;
 import com.newsportal.newsportal.model.User;
 import com.newsportal.newsportal.repository.PermissionRepository;
+import com.newsportal.newsportal.repository.PostGroupRepository;
 import com.newsportal.newsportal.repository.PostRepository;
 import com.newsportal.newsportal.repository.UserRepository;
 import com.newsportal.newsportal.source.Perm;
@@ -29,6 +30,7 @@ public class PostController {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
+
 
     @GetMapping("yeni")
     public ModelAndView newPostPage(ModelAndView modelAndView, HttpSession session){
@@ -91,11 +93,8 @@ public class PostController {
         return modelAndView;
     }
 
-
-
-
     @GetMapping("listele")
-    public ModelAndView modelAndView(ModelAndView modelAndView, HttpSession session){
+    public ModelAndView allPosts(ModelAndView modelAndView, HttpSession session){
         Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
         if(isLoggedIn != null && isLoggedIn) {
             modelAndView.addObject("newPostActive", "active");
@@ -109,28 +108,40 @@ public class PostController {
         return modelAndView;
     }
 
-    @GetMapping("onizle/{postId}")
-    public ModelAndView previewPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
-        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
 
-        if(isLoggedIn != null && isLoggedIn) {
-            int userId = (int) session.getAttribute("id");
-            int groupId = (int) session.getAttribute("groupId");
-            if (permissionRepository.hasPermission(Perm.EDIT_OR_DELETE_POST, groupId)) {
-                Optional<Post> post = postRepository.findById(postId);
-                if(post.isPresent()){
-                    modelAndView.addObject("post", post.get());
-                    modelAndView.setViewName("postPreview.jsp");
+    @PostMapping("delete/{postId}")
+    public ModelAndView deletePost(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+        if(isLoggedIn != null && isLoggedIn){
+            Optional<Post> post = postRepository.findById(postId);
+            if(post.isPresent()){
+                boolean bool = false;
+                int userId = (int) session.getAttribute("id");
+                for(PostGroup postGroup: userRepository.findPostGroupsByUserId(userId)){
+                    if(postGroup.getId() == post.get().getPostGroup().getId()){
+                        bool = true;
+                        break;
+                    }
+                }
+                int groupId = (int) session.getAttribute("groupId");
+                if(bool && permissionRepository.hasPermission(Perm.EDIT_OR_DELETE_POST, groupId)){
+                    postRepository.delete(post.get());
+                    modelAndView.setViewName("redirect:/haber/listele");
                 }else{
                     modelAndView.setViewName("redirect:/haber/listele");
                 }
             }else{
-                modelAndView.setViewName("redirect:/");
+                modelAndView.setViewName("redirect:/haber/listele");
             }
         }else{
-            modelAndView.setViewName("redirect:/");
+            modelAndView.setViewName("redirect:/giris");
         }
         return modelAndView;
+    }
+
+    @GetMapping("duzenle/{postId}")
+    public ModelAndView previewPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId) {
+        return null;
     }
 
 }
