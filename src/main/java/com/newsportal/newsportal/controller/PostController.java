@@ -34,14 +34,19 @@ public class PostController {
     private PostRepository postRepository;
 
 
-    @GetMapping("yeni")
-    public ModelAndView newPostPage(ModelAndView modelAndView, HttpSession session){
-        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
 
+    @GetMapping("yeni")
+    public ModelAndView newPostPage(ModelAndView modelAndView, HttpSession session, Model model){
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
         if(isLoggedIn != null && isLoggedIn){
             int userId =(int) session.getAttribute("id");
             int groupId = (int) session.getAttribute("groupId");
             if(permissionRepository.hasPermission(Perm.CREATE_POST, groupId)){
+                Boolean bool = (Boolean) model.asMap().get("updatePost");
+                if(bool != null && bool){
+                    modelAndView.addObject("updatePost", true);
+                    modelAndView.addObject("post", model.asMap().get("post"));
+                }
                 modelAndView.addObject("newPostActive", "active");
                 modelAndView.addObject("groups", userRepository.findPostGroupsByUserId(userId));
                 modelAndView.setViewName("newPost.jsp");
@@ -118,6 +123,8 @@ public class PostController {
 
             modelAndView.addObject("edit_or_delete_post_permission", permissionRepository.hasPermission(Perm.EDIT_OR_DELETE_POST, groupId));
             modelAndView.addObject("approve_post_permission", permissionRepository.hasPermission(Perm.APPROVE_POST, groupId));
+            modelAndView.addObject("postActive", "active");
+
             modelAndView.addObject("posts", posts);
             modelAndView.setViewName("allPosts.jsp");
         }else{
@@ -233,8 +240,58 @@ public class PostController {
 
 
     @GetMapping("duzenle/{postId}")
-    public ModelAndView previewPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId) {
-        return null;
+    public ModelAndView previewPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId, RedirectAttributes redirectAttributes) {
+
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+        if(isLoggedIn != null && isLoggedIn){
+            int groupId = (int) session.getAttribute("groupId");
+            if(permissionRepository.hasPermission(Perm.CREATE_POST, groupId)){
+                Optional<Post> post = postRepository.findById(postId);
+                if(post.isPresent()){
+                    redirectAttributes.addFlashAttribute("updatePost", true);
+                    redirectAttributes.addFlashAttribute("post", post.get());
+                    modelAndView.setViewName("redirect:/haber/yeni");
+                }else{
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }
+            }else{
+                modelAndView.setViewName("redirect:/haber/listele");
+            }
+        }else{
+            modelAndView.setViewName("redirect:/giris");
+        }
+        return modelAndView;
+
     }
 
+
+    @PostMapping("update/{postId}")
+    public ModelAndView updatePost(ModelAndView modelAndView, HttpSession session, HttpServletRequest request, @PathVariable("postId")final int postId){
+
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+        if(isLoggedIn != null && isLoggedIn) {
+            int userId = (int) session.getAttribute("id");
+            int groupId = (int) session.getAttribute("groupId");
+            if (permissionRepository.hasPermission(Perm.CREATE_POST, groupId)) {
+                Optional<Post> post = postRepository.findById(postId);
+                if(post.isPresent()){
+                    String title = request.getParameter("title");
+                    String postGroup = request.getParameter("post-group");
+                    String content = request.getParameter("content");
+                    String imgUrl = request.getParameter("img-url");
+                    postRepository.saveAndFlush(post.get().setImageUrl(imgUrl).setTitle(title).setContent(content)
+                    .setPostGroup(new PostGroup().setId(Integer.parseInt(postGroup))));
+                    modelAndView.setViewName("redirect:/haber/"+postId);
+                }else{
+                    modelAndView.setViewName("redirect:/haberler/listele");
+                }
+            }else{
+                modelAndView.setViewName("redirect:/haber/listele");
+            }
+        }else{
+            modelAndView.setViewName("redirect:/giris");
+        }
+
+        return modelAndView;
+    }
 }

@@ -28,13 +28,13 @@
                 <c:when test="${sessionScope.isLoggedIn}">
                     <c:choose>
                         <c:when test="${sessionScope.groupId == 1}">
-                            <li class="nav-item">
+                            <li class="nav-item ${postActive}">
                                 <a class="nav-link" href="/haber/listele">Haber Onayla</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item ${categoryActive}">
                                 <a class="nav-link" href="/kategori/listele">Kategori</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item ${editorActive}">
                                 <a class="nav-link" href="/editor/listele">Editör</a>
                             </li>
                         </c:when>

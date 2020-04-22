@@ -43,6 +43,7 @@ public class EditorController {
                 modelAndView.addObject("editors", editors);
                 modelAndView.addObject("securityQuestions", securityQuestionRepository.findAll());
                 modelAndView.addObject("postGroups", postGroupRepository.findAll());
+                modelAndView.addObject("editorActive", "active");
                 modelAndView.setViewName("allEditors.jsp");
             }else{
                 modelAndView.setViewName("redirect:/");

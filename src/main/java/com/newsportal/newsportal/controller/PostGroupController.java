@@ -31,6 +31,8 @@ public class PostGroupController {
             int groupId = (int) session.getAttribute("groupId");
             if(permissionRepository.hasPermission(Perm.CREATE_DELETE_UPDATE_POST_GROUP, groupId)){
                 modelAndView.addObject("postGroups", postGroupRepository.findAll());
+                modelAndView.addObject("categoryActive", "active");
+
                 modelAndView.setViewName("allPostGroups.jsp");
             }else{
                 modelAndView.setViewName("redirect:/");

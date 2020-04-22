@@ -79,38 +79,79 @@
         <%@include file="static/navbar.jsp"%>
 
         <main class="main-content bgc-grey-100" style="padding-left: 20px;">
-            <form class="ui form" action="/haber/create" method="post">
-                <div class="field">
-                    <div class="two fields">
-                        <div class="field">
-                            <input type="text" name="title" id="title" placeholder="Başlık" required>
-                        </div>
-                        <div class="field">
-                            <select name="post-group" id="post-group" class="ui selection dropdown fluid">
-                                <c:forEach var="group" items="${groups}">
-                                    <option value="${group.id}">${group.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class="field">
-                            <textarea name="content" rows="20" placeholder="İçerik" required></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="../static/img/questionMark.png" alt="Resim Bulunamadı" id="post-img">
-                        <br>
-                        <div class="field">
-                            <input type="text" name="img-url" id="img-url" placeholder="Resim Urlsi" required>
-                        </div>
-                    </div>
-                </div>
 
-                <button class="ui button" type="submit" id="new-post-btn">Oluştur</button>
-            </form>
+            <c:choose>
+                <c:when test="${updatePost == true}">
+
+                    <form class="ui form" action="/haber/update/${post.id}" method="post">
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <input type="text" name="title" placeholder="Başlık" value="${post.title}" required>
+                                </div>
+                                <div class="field">
+                                    <select name="post-group" id="post-update-group" class="ui selection dropdown fluid">
+                                        <c:forEach var="group" items="${groups}">
+                                            <option value="${group.id}">${group.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="field">
+                                    <textarea name="content" rows="20" placeholder="İçerik" required>${post.content}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="${post.imageUrl}" alt="Resim Bulunamadı" id="post-img">
+                                <br>
+                                <div class="field">
+                                    <input type="text" name="img-url" id="img-url" placeholder="Resim Urlsi" value="${post.imageUrl}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="ui button" type="submit" id="update-post-btn">Oluştur</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form class="ui form" action="/haber/create" method="post">
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <input type="text" name="title" id="title" placeholder="Başlık" required>
+                                </div>
+                                <div class="field">
+                                    <select name="post-group" id="post-group" class="ui selection dropdown fluid">
+                                        <c:forEach var="group" items="${groups}">
+                                            <option value="${group.id}">${group.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="field">
+                                    <textarea name="content" rows="20" placeholder="İçerik" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="../static/img/questionMark.png" alt="Resim Bulunamadı" id="post-img">
+                                <br>
+                                <div class="field">
+                                    <input type="text" name="img-url" id="img-url" placeholder="Resim Urlsi" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="ui button" type="submit" id="new-post-btn">Oluştur</button>
+                    </form>
+
+                </c:otherwise>
+            </c:choose>
 
         </main>
 
@@ -133,6 +174,8 @@
             document.getElementById("post-img").src = this.value;
         }
     });
+    $('#post-update-group').dropdown('set selected', '${post.postGroup.id}');
+
 
 </script>
 </body>
