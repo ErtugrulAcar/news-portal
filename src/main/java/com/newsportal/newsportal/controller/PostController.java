@@ -10,11 +10,13 @@ import com.newsportal.newsportal.repository.UserRepository;
 import com.newsportal.newsportal.source.Perm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -82,14 +84,22 @@ public class PostController {
     }
 
     @GetMapping("{postId}")
-    public ModelAndView postPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
-        Optional<Post> post = postRepository.findById(postId);
-        if(post.isPresent() && post.get().isVerified()){
-            modelAndView.addObject("post", post.get());
+    public ModelAndView postPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId, Model model){
+        Post redirectedPost = (Post) model.asMap().get("post");
+        if(redirectedPost != null){
+            modelAndView.addObject("approve_post_permission", model.asMap().get("approve_post_permission"));
+            modelAndView.addObject("post", redirectedPost);
             modelAndView.setViewName("post.jsp");
         }else{
-            modelAndView.setViewName("redirect:/");
+            Optional<Post> post = postRepository.findById(postId);
+            if(post.isPresent() && post.get().isVerified()){
+                modelAndView.addObject("post", post.get());
+                modelAndView.setViewName("post.jsp");
+            }else{
+                modelAndView.setViewName("redirect:/");
+            }
         }
+
         return modelAndView;
     }
 
@@ -99,7 +109,15 @@ public class PostController {
         if(isLoggedIn != null && isLoggedIn) {
             modelAndView.addObject("newPostActive", "active");
             int userId = (int) session.getAttribute("id");
-            List<Post> posts = postRepository.findPostsByPostGroups(userRepository.findPostGroupsByUserId(userId));
+            int groupId = (int) session.getAttribute("groupId");
+            List<Post> posts;
+            if(groupId == 1)
+                posts = postRepository.findAllPostsByDescOrder();
+            else
+                posts = postRepository.findPostsByPostGroups(userRepository.findPostGroupsByUserId(userId));
+
+            modelAndView.addObject("edit_or_delete_post_permission", permissionRepository.hasPermission(Perm.EDIT_OR_DELETE_POST, groupId));
+            modelAndView.addObject("approve_post_permission", permissionRepository.hasPermission(Perm.APPROVE_POST, groupId));
             modelAndView.addObject("posts", posts);
             modelAndView.setViewName("allPosts.jsp");
         }else{
@@ -138,6 +156,81 @@ public class PostController {
         }
         return modelAndView;
     }
+
+    @GetMapping("/onizle/{postId}")
+    public ModelAndView previewPost(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId, RedirectAttributes redirectAttributes){
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+
+        if(isLoggedIn != null && isLoggedIn){
+            int groupId = (int) session.getAttribute("groupId");
+            if(permissionRepository.hasPermission(Perm.APPROVE_POST, groupId)){
+                Optional<Post> post = postRepository.findById(postId);
+                if(post.isPresent()) {
+                    redirectAttributes.addFlashAttribute("post", post.get());
+                    redirectAttributes.addFlashAttribute("approve_post_permission", true);
+                    modelAndView.setViewName("redirect:/haber/" + postId);
+                }else{
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }
+            }else{
+                modelAndView.setViewName("redirect:/haber/listele");
+            }
+        }else{
+            modelAndView.setViewName("redirect:/giris");
+        }
+
+
+        return modelAndView;
+    }
+
+
+    @PostMapping("/approve/{postId}")
+    public ModelAndView approvePost(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+        if(isLoggedIn != null && isLoggedIn){
+            int groupId = (int) session.getAttribute("groupId");
+            if(permissionRepository.hasPermission(Perm.APPROVE_POST, groupId)){
+                Optional<Post> post = postRepository.findById(postId);;
+                if(post.isPresent()){
+                    post.get().setVerified(true);
+                    postRepository.saveAndFlush(post.get());
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }else{
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }
+            }else{
+                modelAndView.setViewName("redirect:/");
+            }
+        }else{
+            modelAndView.setViewName("redirect:/giris");
+        }
+        return modelAndView;
+
+    }
+
+    @PostMapping("/disapprove/{postId}")
+    public ModelAndView disapprovePost(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId){
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
+        if(isLoggedIn != null && isLoggedIn){
+            int groupId = (int) session.getAttribute("groupId");
+            if(permissionRepository.hasPermission(Perm.APPROVE_POST, groupId)){
+                Optional<Post> post = postRepository.findById(postId);
+                if(post.isPresent()){
+                    post.get().setVerified(false);
+                    postRepository.saveAndFlush(post.get());
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }else{
+                    modelAndView.setViewName("redirect:/haber/listele");
+                }
+            }else{
+                modelAndView.setViewName("redirect:/");
+            }
+        }else{
+            modelAndView.setViewName("redirect:/giris");
+        }
+        return modelAndView;
+    }
+
 
     @GetMapping("duzenle/{postId}")
     public ModelAndView previewPage(ModelAndView modelAndView, HttpSession session, @PathVariable("postId")final int postId) {

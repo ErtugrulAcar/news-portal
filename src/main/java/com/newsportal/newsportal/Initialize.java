@@ -144,11 +144,17 @@ public class Initialize implements CommandLineRunner {
                             )
                     ),
                     new Permission().setId(2).setName("Haber Güncelleme yada Silme Yetkisi").setDescription("Sahip olunan kategorideki tüm onaylanan yada onaylanmayan haberleri güncelleme yada silme yetkisi")
-                        .setGroups(
-                                Arrays.asList(
-                                        new Group().setId(Grp.EDITOR)
-                                )
-                        )
+                    .setGroups(
+                            Arrays.asList(
+                                    new Group().setId(Grp.EDITOR)
+                            )
+                    ),
+                    new Permission().setId(3).setName("Haber Onaylama Yetkisi").setDescription("Mevcut haberleri onaylama yada reddetme yetkisi")
+                    .setGroups(
+                            Arrays.asList(
+                                    new Group().setId(Grp.ADMIN)
+                            )
+                    )
                 )
         );
     }

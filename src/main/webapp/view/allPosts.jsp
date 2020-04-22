@@ -82,38 +82,48 @@
             <table class="ui celled striped table">
                 <thead class="full-width">
                     <tr>
-                        <th>Sil</th>
+                        <c:if test="${edit_or_delete_post_permission}">
+                            <th>Sil</th>
+                        </c:if>
                         <th>Başlık</th>
                         <th>Tür</th>
                         <th>Yazar</th>
                         <th>Tarih</th>
                         <th>Onaylandı</th>
-                        <th>Güncelle</th>
+                        <c:if test="${edit_or_delete_post_permission}">
+                            <th>Güncelle</th>
+                        </c:if>
+                        <c:if test="${approve_post_permission}">
+                            <th>Önizle</th>
+                        </c:if>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="post" items="${posts}">
                         <tr>
-                            <td style="text-align: center;">
-                                <i class="fas fa-trash" data-toggle="modal" data-target="#delete-post-${post.id}"></i>
-                            </td>
-                            <div class="modal fade" id="delete-post-${post.id}" tabindex="-1" role="dialog" aria-labelledby="delete-post-${post.id}" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <form action="/haber/delete/${post.id}" method="post">
-                                            <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Haber Sil</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                            </div>
-                                            <div class="modal-body">'${post.title}' başlıklı haberi silmek istiyor musunuz ?</div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
-                                                <button type="submit" class="btn btn-danger">&nbsp;	&nbsp;	Sil &nbsp;	&nbsp;	</button>
-                                            </div>
-                                        </form>
+                            <c:if test="${edit_or_delete_post_permission}">
+                                <td style="text-align: center;">
+                                    <i class="fas fa-trash" data-toggle="modal" data-target="#delete-post-${post.id}"></i>
+                                </td>
+                                <div class="modal fade" id="delete-post-${post.id}" tabindex="-1" role="dialog" aria-labelledby="delete-post-${post.id}" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form action="/haber/delete/${post.id}" method="post">
+                                                <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Haber Sil</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                </div>
+                                                <div class="modal-body">'${post.title}' başlıklı haberi silmek istiyor musunuz ?</div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                                                    <button type="submit" class="btn btn-danger">&nbsp;	&nbsp;	Sil &nbsp;	&nbsp;	</button>
+                                                </div>
+                                            </form>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
+                            </c:if>
                             <td>${post.title}</td>
                             <td>${post.postGroup.name}</td>
                             <td>${post.getAuthorNameAndLastname()}</td>
@@ -128,9 +138,18 @@
                                     <td></td>
                                 </c:otherwise>
                             </c:choose>
-                            <td style="text-align: center;">
-                                <a href="/haber/duzenle/${post.id}"><i class="far fa-edit"></i></a>
-                            </td>
+                            <c:if test="${edit_or_delete_post_permission}">
+                                <td style="text-align: center;">
+                                    <a href="/haber/duzenle/${post.id}"><i class="far fa-edit"></i></a>
+                                </td>
+                            </c:if>
+                            <c:if test="${approve_post_permission}">
+                               <td style="text-align: center;">
+                                   <a href="/haber/onizle/${post.id}">
+                                       <i class="fas fa-search"></i>
+                                   </a>
+                               </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </tbody>

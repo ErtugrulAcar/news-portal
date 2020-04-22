@@ -57,7 +57,7 @@
             }
         }</style>
     <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/post.css">
+    <link rel="stylesheet" href="../static/css/previewPost.css">
     <link rel="stylesheet" href="../static/semantic/semantic.css">
 </head>
 <body class="app" style="background-image: url(../static/img/gazette.jpg)">
@@ -79,38 +79,6 @@
         <%@include file="static/navbar.jsp"%>
 
         <main class="main-content bgc-grey-100" style="padding-left: 20px;">
-            <c:if test="${approve_post_permission}">
-
-                <c:choose>
-                    <c:when test="${!post.verified}">
-                        <form action="/haber/approve/${post.id}" method="post">
-                            <div class="row" style="padding-bottom: 35px;">
-                                <div class="col-md-6">
-                                    <button class="btn btn-danger" type="button" data-toggle="popover" data-content="Bu haber zaten deaktif durumda" data-original-title="Üzgünüz!" style="width: 100%; height: 40px;"> Reddet </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-success" type="submit" style="width: 100%; height: 40px;"> Onayla </button>
-                                </div>
-                            </div>
-                        </form>
-                    </c:when>
-                    <c:otherwise>
-                        <form action="/haber/disapprove/${post.id}" method="post">
-                            <div class="row" style="padding-bottom: 35px;">
-                                <div class="col-md-6">
-                                    <button class="btn btn-danger" type="submit" style="width: 100%; height: 40px;"> Reddet </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-success" type="button" data-toggle="popover" data-content="Bu haber zaten aktif durumda" data-original-title="Üzgünüz!" style="width: 100%; height: 40px;"> Onayla </button>
-                                </div>
-                            </div>
-                        </form>
-                    </c:otherwise>
-                </c:choose>
-
-
-            </c:if>
-
             <h3>${post.title}</h3>
             <div class="row">
                 <div class="col-md-9">

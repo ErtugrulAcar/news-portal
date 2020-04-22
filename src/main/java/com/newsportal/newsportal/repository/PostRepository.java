@@ -15,4 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("SELECT post FROM Post AS post WHERE post.postGroup IN :postGroups")
     List<Post> findPostsByPostGroups(List<PostGroup> postGroups);
+
+    @Query("SELECT post FROM Post AS post ORDER BY post.created_at DESC")
+    List<Post> findAllPostsByDescOrder();
 }

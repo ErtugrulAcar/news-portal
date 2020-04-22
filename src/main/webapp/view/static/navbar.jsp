@@ -29,7 +29,7 @@
                     <c:choose>
                         <c:when test="${sessionScope.groupId == 1}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Haber Onayla</a>
+                                <a class="nav-link" href="/haber/listele">Haber Onayla</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kategori</a>
