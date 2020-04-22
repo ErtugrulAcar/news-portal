@@ -75,7 +75,7 @@ public class PostController {
                         .setContent(content)
                         .setImageUrl(imgUrl)
                 );
-                modelAndView.setViewName("redirect:/guncelle");
+                modelAndView.setViewName("redirect:/haber/listele");
                 return modelAndView;
             }
         }

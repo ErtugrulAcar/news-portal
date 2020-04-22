@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity(name = "postgroup")
 public class PostGroup {
@@ -75,5 +76,10 @@ public class PostGroup {
     public PostGroup setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
         return this;
+    }
+
+    public String getTimestampsAsReadable(LocalDateTime localDateTime){
+        return localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+
     }
 }

@@ -32,7 +32,7 @@
                                 <a class="nav-link" href="/haber/listele">Haber Onayla</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Kategori</a>
+                                <a class="nav-link" href="/kategori/listele">Kategori</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Editör</a>
