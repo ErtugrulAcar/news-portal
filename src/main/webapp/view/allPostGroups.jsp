@@ -159,8 +159,8 @@
                     <tr>
 
                         <th colspan="6">
-                            <div class="ui right floated small primary labeled icon button" type="button" data-toggle="modal" data-target="#create-category">
-                                <i class="fas fa-list-ul" style="float: left;"></i> Kategori Ekle
+                            <div class="ui right floated small icon button" type="button" data-toggle="modal" data-target="#create-category" style="color: white; background-color: #FA906E;">
+                                Kategori Ekle
                             </div>
 
                         </th>

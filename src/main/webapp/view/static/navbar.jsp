@@ -21,8 +21,8 @@
             <li class="nav-item ${homeActive}">
                 <a class="nav-link" href="/">Anasayfa</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Ayrıntılı Arama</a>
+            <li class="nav-item ${filterActive}">
+                <a class="nav-link" href="/haber/filtre">Filtre</a>
             </li>
             <c:choose>
                 <c:when test="${sessionScope.isLoggedIn}">
@@ -77,6 +77,11 @@
                     <li class="nav-item ${profileActive}">
                         <a class="nav-link" href="/profil">
                             <i class="fas fa-user-tag"></i> &nbsp;Profil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">
+                            <i class="fas fa-power-off"></i> &nbsp;Çıkış
                         </a>
                     </li>
                 </c:when>

@@ -126,8 +126,8 @@
                 <tfoot class="full-width">
                 <tr>
                     <th colspan="7">
-                        <div class="ui right floated small primary labeled icon button" type="button" data-toggle="modal" data-target="#create-editor">
-                            <i class="fas fa-list-ul" style="float: left;"></i> Editör Ekle
+                        <div class="ui right floated small primary icon button" type="button" data-toggle="modal" data-target="#create-editor" style="color: white; background-color: #FA906E;">
+                            Editör Ekle
                         </div>
 
                     </th>

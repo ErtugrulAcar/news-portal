@@ -2,7 +2,6 @@ package com.newsportal.newsportal.repository;
 
 import com.newsportal.newsportal.model.Post;
 import com.newsportal.newsportal.model.PostGroup;
-import com.newsportal.newsportal.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,4 +17,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Query("SELECT post FROM Post AS post ORDER BY post.created_at DESC")
     List<Post> findAllPostsByDescOrder();
+
+    @Query("SELECT post FROM Post AS post WHERE post.postGroup.id IN :postGroups ORDER BY post.created_at DESC")
+    List<Post> findAllPostsByPostGroupsDescOrder(List<Integer> postGroups);
+
+    @Query("SELECT post FROM Post AS post WHERE post.postGroup.id IN :postGroups ORDER BY post.created_at ASC")
+    List<Post> findAllPostsByPostGroupsAscOrder(List<Integer> postGroups);
 }
