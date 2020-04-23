@@ -80,28 +80,28 @@ public class Initialize implements CommandLineRunner {
     public void initUser(){
         userRepository.saveAll(
                 Arrays.asList(
-                        new User().setId(1).setName("Kemal").setLastname("Işık").setAddress("Zümrüt Sokak").setPhoneNumber("5316452452").setGroup(new Group().setId(Grp.ADMIN)).setBeInUse(true),
-                        new User().setId(2).setName("Adil").setLastname("Sökmen").setAddress("Kemal Paşa Mahallesi").setPhoneNumber("5453556482").setGroup(new Group().setId(Grp.EDITOR)).setBeInUse(true)
-                        .setPostGroup(Arrays.asList(new PostGroup().setId(PostGrp.ECONOMY), new PostGroup().setId(PostGrp.SPORT))),
-                        new User().setId(3).setName("Mustafa").setLastname("Murat").setAddress("Atakent Mahallesi").setPhoneNumber("5143125544").setGroup(new Group().setId(Grp.USER)).setBeInUse(true)
+                        new User().setId(1).setName("admin").setLastname("admin").setAddress("Adminin adresi").setPhoneNumber("5316452452").setGroup(new Group().setId(Grp.ADMIN)).setBeInUse(true),
+                        new User().setId(2).setName("editor").setLastname("editor").setAddress("Editörün Adresi").setPhoneNumber("5453556482").setGroup(new Group().setId(Grp.EDITOR)).setBeInUse(true)
+                        .setPostGroup(Arrays.asList(new PostGroup().setId(PostGrp.ECONOMY), new PostGroup().setId(PostGrp.WEATHER), new PostGroup().setId(PostGrp.POLITICS), new PostGroup().setId(PostGrp.SPORT))),
+                        new User().setId(3).setName("user").setLastname("user").setAddress("Kullanıcının Addresi").setPhoneNumber("5143125544").setGroup(new Group().setId(Grp.USER)).setBeInUse(true)
                 )
         );
         userAccountRepository.saveAll(
                 Arrays.asList(
                         new UserAccount()
-                                .setUsername("kemal").setPassword("12345")
+                                .setUsername("admin").setPassword("admin")
                                 .setSecurityQuestion(new SecurityQuestion().setId(1))
-                                .setSecurityQuestionAnswer("kemal")
+                                .setSecurityQuestionAnswer("admin")
                                 .setUser(new User().setId(1)),
                         new UserAccount()
-                                .setUsername("adil").setPassword("12345")
+                                .setUsername("editor").setPassword("editor")
                                 .setSecurityQuestion(new SecurityQuestion().setId(2))
-                                .setSecurityQuestionAnswer("yılmaz")
+                                .setSecurityQuestionAnswer("editor")
                                 .setUser(new User().setId(2)),
                         new UserAccount()
-                                .setUsername("mustafa").setPassword("12345")
+                                .setUsername("user").setPassword("user")
                                 .setSecurityQuestion(new SecurityQuestion().setId(4))
-                                .setSecurityQuestionAnswer("İstanbul")
+                                .setSecurityQuestionAnswer("user")
                                 .setUser(new User().setId(3))
 
                 )
@@ -110,11 +110,20 @@ public class Initialize implements CommandLineRunner {
 
     public void initPost(){
         postRepository.saveAll(
-
                 Arrays.asList(
-                        new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.ECONOMY))
-                        .setTitle("Hanelere 1000'er lira desteğin başvuru detayları belli oldu")
-                        .setImageUrl("https://im.haberturk.com/2020/04/21/ver1587471607/2653393_810x458.jpg")
+                        new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.SPORT))
+                        .setTitle("Ligler tamamlanamazsa Şampiyonlar Ligi'ne hangi takım gidecek? UEFA açıkladı!")
+                        .setImageUrl("https://i4.hurimg.com/i/hurriyet/75/750x422/5ea1a2ab0f25440ce0a0a70d.jpg")
+                        .setVerified(true)
+                        .setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis viverra nibh cras pulvinar mattis. Aliquet bibendum enim facilisis gravida. Etiam sit amet nisl purus in mollis. Orci eu lobortis elementum nibh tellus molestie. Volutpat est velit egestas dui id. Lacus sed viverra tellus in hac habitasse. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Quis vel eros donec ac odio tempor orci. Faucibus et molestie ac feugiat sed lectus vestibulum mattis. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec.\n" +
+                                "\n" +
+                                "Justo nec ultrices dui sapien eget mi. Et tortor at risus viverra adipiscing at in. Non curabitur gravida arcu ac tortor. Dignissim sodales ut eu sem integer vitae justo eget magna. In fermentum posuere urna nec tincidunt. Consectetur a erat nam at lectus urna duis. Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Sagittis purus sit amet volutpat consequat mauris. Ut aliquam purus sit amet luctus venenatis lectus. Sem et tortor consequat id porta nibh venenatis cras sed. Metus dictum at tempor commodo ullamcorper a lacus. Nam aliquam sem et tortor consequat id porta nibh venenatis. Dictum varius duis at consectetur lorem donec. Pretium nibh ipsum consequat nisl vel pretium.\n" +
+                                "\n" +
+                                "Diam ut venenatis tellus in metus vulputate. Id semper risus in hendrerit gravida rutrum quisque non tellus. Sit amet consectetur adipiscing elit ut aliquam. Pharetra vel turpis nunc eget lorem dolor sed. Mattis nunc sed blandit libero volutpat. Maecenas pharetra convallis posuere morbi leo urna molestie. Varius morbi enim nunc faucibus a. Semper risus in hendrerit gravida rutrum quisque. Nisl tincidunt eget nullam non nisi est sit amet. Id velit ut tortor pretium viverra suspendisse potenti nullam ac. Lobortis mattis aliquam faucibus purus in massa.\n" ),
+
+                       new Post().setAuthor(new User().setId(2)).setPostGroup(new PostGroup().setId(PostGrp.WEATHER))
+                        .setTitle("Meteoroloji'den sağanak ve kar uyarısı! Bölgeleri tek tek sıraladı ve...")
+                        .setImageUrl("https://imgrosetta.mynet.com.tr/file/11948949/11948949-320x180.jpg")
                         .setVerified(true)
                         .setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis viverra nibh cras pulvinar mattis. Aliquet bibendum enim facilisis gravida. Etiam sit amet nisl purus in mollis. Orci eu lobortis elementum nibh tellus molestie. Volutpat est velit egestas dui id. Lacus sed viverra tellus in hac habitasse. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Quis vel eros donec ac odio tempor orci. Faucibus et molestie ac feugiat sed lectus vestibulum mattis. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec.\n" +
                                 "\n" +

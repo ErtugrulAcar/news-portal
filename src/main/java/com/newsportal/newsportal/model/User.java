@@ -10,7 +10,6 @@ public class User {
     private int id;
     private String name;
     private String lastname;
-    @Column(length = 10)
     private String phoneNumber;
     private String address;
     private boolean beInUse;
