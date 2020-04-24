@@ -110,7 +110,20 @@
                                 <div class="field">
                                     <input type="text" name="img-url" id="img-url" placeholder="Resim Urlsi" value="${post.imageUrl}" required>
                                 </div>
+                                <br>
+                                <div class="ui slider checkbox privacy-div">
+                                    <c:if test="${!post.privacy}">
+                                        <input type="checkbox" name="privacy" checked>
+                                        <label>Herkese Açık</label>
+                                    </c:if>
+                                    <c:if test="${post.privacy}">
+                                        <input type="checkbox" name="privacy">
+                                        <label>Herkese Açık</label>
+                                    </c:if>
+
+                                </div>
                             </div>
+
                         </div>
 
                         <button class="ui button" type="submit" id="update-post-btn">Oluştur</button>
@@ -144,8 +157,15 @@
                                 <div class="field">
                                     <input type="text" name="img-url" id="img-url" placeholder="Resim Urlsi" required>
                                 </div>
+                                <br>
+                                <div class="ui slider checkbox privacy-div">
+                                    <input type="checkbox" name="privacy" checked>
+                                    <label>Herkese Açık</label>
+                                </div>
                             </div>
                         </div>
+
+
 
                         <button class="ui button" type="submit" id="new-post-btn">Oluştur</button>
                     </form>

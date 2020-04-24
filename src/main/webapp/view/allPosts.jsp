@@ -89,6 +89,7 @@
                         <th>Tür</th>
                         <th>Yazar</th>
                         <th>Tarih</th>
+                        <th>Görünebilirlik (Herkes)</th>
                         <th>Onaylandı</th>
                         <c:if test="${edit_or_delete_post_permission}">
                             <th>Güncelle</th>
@@ -128,6 +129,16 @@
                             <td>${post.postGroup.name}</td>
                             <td>${post.getAuthorNameAndLastname()}</td>
                             <td>${post.getLocalDateTimeAsReadable(post.created_at)}</td>
+                            <c:choose>
+                                <c:when test="${!post.privacy}">
+                                    <td class="center aligned">
+                                        <i class="large green checkmark icon"></i>
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
                             <c:choose>
                                 <c:when test="${post.verified}">
                                     <td class="center aligned">

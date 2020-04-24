@@ -24,6 +24,8 @@ public class Post {
 
     private boolean verified;
 
+    private boolean privacy;
+
     @ManyToOne
     private User author;
 
@@ -57,6 +59,8 @@ public class Post {
     public boolean isVerified() {
         return verified;
     }
+
+    public boolean isPrivacy(){ return privacy; }
 
     public User getAuthor() {
         return author;
@@ -97,6 +101,11 @@ public class Post {
 
     public Post setVerified(boolean verified) {
         this.verified = verified;
+        return this;
+    }
+
+    public Post setPrivacy(boolean privacy) {
+        this.privacy = privacy;
         return this;
     }
 

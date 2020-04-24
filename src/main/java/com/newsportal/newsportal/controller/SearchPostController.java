@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,11 +28,12 @@ public class SearchPostController {
     private PostGroupRepository postGroupRepository;
 
     @GetMapping("filtre")
-    public ModelAndView filterPosts(ModelAndView modelAndView, Model model){
+    public ModelAndView filterPosts(ModelAndView modelAndView, Model model, HttpSession session){
         String timeFilter = (String) model.asMap().get("timeFilter");
         List<String> postGroupFilter = (List<String>) model.asMap().get("postGroupFilter");
         List<PostGroup> postGroups = postGroupRepository.findAll();
         modelAndView.addObject("postGroups", postGroups);
+        Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
 
         if( timeFilter != null && postGroupFilter != null ){
             modelAndView.addObject("timeFilter", timeFilter);
@@ -41,13 +43,24 @@ public class SearchPostController {
                 postGroupIds.add(Integer.parseInt(id));
 
             if(timeFilter.equals("dated"))
-                modelAndView.addObject("posts", postRepository.findAllPostsByPostGroupsAscOrder(postGroupIds));
+                if(isLoggedIn != null && isLoggedIn)
+                    modelAndView.addObject("posts", postRepository.findAllPostsByPostGroupsAndPrivacyAscOrder(postGroupIds, Arrays.asList(true, false)));
+                else
+                    modelAndView.addObject("posts", postRepository.findAllPostsByPostGroupsAndPrivacyAscOrder(postGroupIds, Arrays.asList(false)));
+
             else
-                modelAndView.addObject("posts", postRepository.findAllPostsByPostGroupsDescOrder(postGroupIds));
+                if(isLoggedIn != null && isLoggedIn)
+                    modelAndView.addObject("posts", postRepository.findAllPostsByPostGroupsAndPrivacyDescOrder(postGroupIds, Arrays.asList(true, false)));
+                else
+                    modelAndView.addObject("posts", postRepository.findAllPostsByPostGroupsAndPrivacyDescOrder(postGroupIds, Arrays.asList(false)));
 
         }else{
             modelAndView.addObject("postGroupFilter", postGroups.stream().map(PostGroup::getId).collect(Collectors.toList()));
-            modelAndView.addObject("posts", postRepository.findAllPostsByDescOrder());
+            if(isLoggedIn != null && isLoggedIn)
+                modelAndView.addObject("posts", postRepository.findAllPostsByPrivacyListDescOrder(Arrays.asList(true, false)));
+            else
+                modelAndView.addObject("posts", postRepository.findAllPostsByPrivacyListDescOrder(Arrays.asList(false)));
+
 
         }
         modelAndView.addObject("filterActive", "active");

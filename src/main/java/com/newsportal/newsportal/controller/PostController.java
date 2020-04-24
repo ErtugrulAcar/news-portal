@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +72,11 @@ public class PostController {
                 String postGroup = request.getParameter("post-group");
                 String content = request.getParameter("content");
                 String imgUrl = request.getParameter("img-url");
+                String privacy = request.getParameter("privacy");
+                boolean privacyBool = true;
+                if(privacy != null && privacy.equals("on"))
+                    privacyBool = false;
+
 
                 postRepository.saveAndFlush(
                         new Post().setAuthor(new User().setId(userId))
@@ -79,6 +85,7 @@ public class PostController {
                         .setPostGroup(new PostGroup().setId(Integer.parseInt(postGroup)))
                         .setContent(content)
                         .setImageUrl(imgUrl)
+                        .setPrivacy(privacyBool)
                 );
                 modelAndView.setViewName("redirect:/haber/listele");
                 return modelAndView;
@@ -117,7 +124,7 @@ public class PostController {
             int groupId = (int) session.getAttribute("groupId");
             List<Post> posts;
             if(groupId == 1)
-                posts = postRepository.findAllPostsByDescOrder();
+                posts = postRepository.findAllPostsByPrivacyListDescOrder(Arrays.asList(true, false));
             else
                 posts = postRepository.findPostsByPostGroups(userRepository.findPostGroupsByUserId(userId));
 
@@ -279,7 +286,11 @@ public class PostController {
                     String postGroup = request.getParameter("post-group");
                     String content = request.getParameter("content");
                     String imgUrl = request.getParameter("img-url");
-                    postRepository.saveAndFlush(post.get().setImageUrl(imgUrl).setTitle(title).setContent(content)
+                    String privacy = request.getParameter("privacy");
+                    boolean privacyBool = true;
+                    if(privacy != null && privacy.equals("on"))
+                        privacyBool = false;
+                    postRepository.saveAndFlush(post.get().setImageUrl(imgUrl).setTitle(title).setContent(content).setPrivacy(privacyBool)
                     .setPostGroup(new PostGroup().setId(Integer.parseInt(postGroup))));
                     modelAndView.setViewName("redirect:/haber/"+postId);
                 }else{
